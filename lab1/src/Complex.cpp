@@ -170,7 +170,6 @@ std::ostream& operator<<(std::ostream& stream, Complex& complex)
 std::istream& operator>>(std::istream& stream, Complex& complex)
 {
   // Flagi i liczba prób
-  //////////////////
   bool failed = 0;
   int attempts = 3;
 
@@ -184,58 +183,79 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
     int data_len = data.length();  // Długość wyrażenia
     
     std::string numbers[10]; // Pojemnik na wyciągnięte liczby
-    int numbers_i=0;         // Iterator dla numbers
+    int num_i=0;         // Iterator dla numbers
 
-    ///////////////////////////////////////////
+
+
     // Filtrowanie danych i wyciągnięcie liczb
-    ///////////////////////////////////////////
-    for(int i=0; i<data_len; i++)
+    // =========================================
+    for(int i=1; i<data_len-1; i++)
     {
-      if(((data[i]>= '0' && data[i] <= '9') || data[i] == '-' || data[i] == '+' || data[i] == '.' || data[i] == 'i') && i > 0 && i < data_len-1 )
-      {
-        if((data[i] == '-' || data[i] == '+') && numbers[0].length() > 0)
+        // Najpierw sprawdźmy nawiasy
+        if(data[0] != '(' || data[data_len-1] != ')')
         {
-          if(++numbers_i >= 9)
-          {
-            std::cerr << "Error: Too long expression!" << std::endl; 
-            failed = 1; 
-          }
+          failed = 1;
         }
-          numbers[numbers_i] += data[i];
-      }
-      else
-      {
-        switch (data[i])
+        else
         {
-          case '(':
-            if(i != 0)
-              failed = 1;
-            break;
-          
-          case ')':
-            if(i != data_len-1)
-              failed = 1;
-            break;
+          switch (data[i])
+          {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case 'i':
+                numbers[num_i] += data[i];
+              break;
 
-          default:
-            failed = 1;
-        }// switch
-      }// else
+            case '+':
+            case '-': // - i + ocznaczają nową liczbę - chyba, że pierwsza nie została jeszcze podana
+                if(numbers[0].length() > 0)
+                  if(++num_i >= 9)
+                  {
+                    std::cerr << "Error: Too long expression!" << std::endl; 
+                    failed = 1; 
+                  }
+                numbers[num_i] += data[i];
+              break;
 
-      if(failed){      
-        std::cerr << "Error: Wrong format!" << std::endl;
-        i=data_len;
-        data = "";
-      }
+            case '.': // Kropka musi być poprzedzona, bądź mieć po sobie cyfrę
+                if((data[i-1] >= '0' && data[i-1] <= '9')
+                || (data[i+1] >= '0' && data[i+1] <= '9'))
+                {
+                  numbers[num_i] += data[i];
+                }
+                else
+                {
+                  failed = 1;
+                }
+              break;
+              
+            default:
+              failed = 1;
+          }// switch
+        }// else
+
+        if(failed){      
+          std::cerr << "Error: Wrong format!" << std::endl;
+          i=data_len;
+          data = "";
+        }
     }// for
     
     // Jeśli etap filtrowania przeszedł pomyślnie
-    //////////////////////////////////////////////
+    // ========================================================
     // tablica numbers - przechowuje w tym momencie liczby podane przez użytkownika
     //                   nieposegregowane: rzeczywiste i urojone(z literką "i").
-    // numbers_i - liczba... liczb
+    // num_i - liczba... liczb
     if(!failed){
-      for(int i=0; i <= numbers_i; i++){
+      for(int i=0; i <= num_i; i++){
 
         int numbers_len = numbers[i].length();
 
