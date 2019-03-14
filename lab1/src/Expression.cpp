@@ -14,13 +14,13 @@ void Points::goodAnswer(){
 void Points::badAnswer(){
     pool++;
 }
-void Points::check(Complex c1, Complex c2){
-    if(c1 == c2){
+void Points::check(Complex pattern, Complex answer){
+    if(pattern == answer){
         Points::goodAnswer();
         std::cout << "Dobrze!" << std::endl;
     }else{
         Points::badAnswer();
-        std::cout << "Zla odpowiedz." << std::endl;
+        std::cout << "Zla odpowiedz. Prawidlowy wynik: "<< pattern << std::endl;
     }
 }
 void Points::showResults(){
