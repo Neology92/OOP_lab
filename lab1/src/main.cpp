@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Database.hh"
-
+#include "Statistics.hh"
 
 
 int main(int argc, char **argv)
