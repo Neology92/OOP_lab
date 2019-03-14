@@ -121,6 +121,15 @@ Complex  operator / (Complex  arg1,  Complex  arg2)
   return result;
 }
 
+bool operator == (Complex  arg1,  Complex  arg2)
+{
+  if(arg1.im == arg2.im && arg1.re == arg2.re)
+    return true;
+  else
+    return false;
+}
+
+
 
 /*!
  * Pozwala wypisać liczbę zespoloną.

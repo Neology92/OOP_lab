@@ -28,6 +28,7 @@ Complex  operator + (Complex  arg1,  Complex  arg2);
 Complex  operator - (Complex  arg1,  Complex  arg2);
 Complex  operator * (Complex  arg1,  Complex  arg2);
 Complex  operator / (Complex  arg1,  Complex  arg2);
+bool     operator== (Complex  arg1,  Complex  arg2);
 
 
 // Przeciazenie strumieni wejścia i wyjścia
