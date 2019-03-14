@@ -17,14 +17,16 @@ void Points::badAnswer(){
 void Points::check(Complex c1, Complex c2){
     if(c1 == c2){
         Points::goodAnswer();
+        std::cout << "Dobrze!" << std::endl;
     }else{
         Points::badAnswer();
+        std::cout << "Zla odpowiedz." << std::endl;
     }
 }
 void Points::showResults(){
     std::cout << "Ilosc dobrych odpowiedzi: " << count << std::endl;
     std::cout << "Ilosc zlych odpowiedzi: " << pool-count << std::endl;
-    std::cout << "Wynik procentowy: " << (float)(100*count/pool) << std::endl;
+    std::cout << "Wynik procentowy: " << (float)(100*count/pool) << "%"<< std::endl;
 }
 
 Complex Solve(Expression  expr)
