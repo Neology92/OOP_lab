@@ -3,34 +3,56 @@
 #include "Expression.hh"
 
 
-// void Display(Expression  expr){}
-
+Points::Points(){
+    count = 0;
+    pool = 0;
+}
+void Points::goodAnswer(){
+    pool++;
+    count++;
+}
+void Points::badAnswer(){
+    pool++;
+}
+void Points::check(Complex c1, Complex c2){
+    if(c1 == c2){
+        Points::goodAnswer();
+    }else{
+        Points::badAnswer();
+    }
+}
+void Points::showResults(){
+    std::cout << "Ilosc dobrych odpowiedzi: " << count << std::endl;
+    std::cout << "Ilosc zlych odpowiedzi: " << pool-count << std::endl;
+    std::cout << "Wynik procentowy: " << (float)(100*count/pool) << std::endl;
+}
 
 Complex Solve(Expression  expr)
 {
     Complex result{0,0};
 
     switch (expr.op)
-  {
-    case kAddition: 
-        result = expr.arg1 + expr.arg2;
-      break;
+    {
+        case kAddition: 
+            result = expr.arg1 + expr.arg2;
+          break;
 
-    case kSubtraction:
-        result = expr.arg1 - expr.arg2;
-      break;
-    
-    case kMultiplication:
-        result = expr.arg1 * expr.arg2;
-      break;
+        case kSubtraction:
+            result = expr.arg1 - expr.arg2;
+          break;
+        
+        case kMultiplication:
+            result = expr.arg1 * expr.arg2;
+          break;
 
-    case kDivision:
-        result = expr.arg1 / expr.arg2;
-      break;
+        case kDivision:
+            result = expr.arg1 / expr.arg2;
+          break;
 
-    default:
-      break;
-  }
+        default:
+            std::cerr << "Error: Unknown operator in expression!" << std::endl;
+          break;
+    }
 
     return result;
 }
