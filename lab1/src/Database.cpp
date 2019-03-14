@@ -11,7 +11,8 @@ using namespace std;
  * Zawiera ona tresc latwego testu.
  */
 static Expression  easy_test[] =
-  { {{2,1}, kAddition, {1,2}},
+  { 
+    {{2,1}, kAddition, {1,2}},
     {{1,0}, kSubtraction, {0,1}},
     {{3,0}, kMultiplication, {0,3}},
     {{4,8}, kDivision, {1,0}},
@@ -22,10 +23,11 @@ static Expression  easy_test[] =
  *
  */
 static Expression  hard_test[] =
-  { {{ 1.1, 5.5}, kMultiplication, { 2.3, 4.1}},
-    {{ 2, 2},     kDivision,       { 2,-1}},
+  { 
     {{ 4.3,-1.1}, kMultiplication, { 7.2, 2.4}},
-    {{-1.5, 6.0}, kDivision,       {-5.0,-1.2}},
+    {{ 2, 2},     kDivision,       { 2,-1}},
+    {{ 1.1, 5.5}, kMultiplication, { 2.3, 4.1}},
+    {{-1.5, 6.0}, kDivision,       {-0.5,-1.5}},
   };
 
 
