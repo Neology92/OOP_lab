@@ -21,9 +21,12 @@ static Expression  easy_test[] =
  * Analogicznie zdefiniuj test "trudne"
  *
  */
-
-
-
+static Expression  hard_test[] =
+  { {{ 1.1, 5.5}, kMultiplication, { 2.3, 4.1}},
+    {{ 2, 2},     kDivision,       { 2,-1}},
+    {{ 4.3,-1.1}, kMultiplication, { 7.2, 2.4}},
+    {{-1.5, 6.0}, kDivision,       {-5.0,-1.2}},
+  };
 
 
 /*
@@ -78,9 +81,10 @@ bool Init( Database  *database_ptr, const char*  test_name )
     SetTest(database_ptr,easy_test,sizeof(easy_test)/sizeof(Expression));
     return true;
   }
-  /*
-   * Analogicznie zrob inicjalizacje dla testu trudne
-   */
+  else if (!strcmp(test_name,"trudny")) {
+    SetTest(database_ptr,hard_test,sizeof(hard_test)/sizeof(Expression));
+    return true;
+  }
 
   cerr << "Otwarcie testu '" << test_name << "' nie powiodlo sie." << endl;
   return false;
