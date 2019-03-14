@@ -175,6 +175,11 @@ std::ostream& operator<<(std::ostream& stream, Complex& complex)
  *    arg2 - liczba zespolona.
  * Zwraca:
  *    strumień z liczbą zespoloną.
+ * 
+ * Założenia:
+ *    Użytkownik nie może wprowadzić (Nieprzeidywalne zachowanie):
+ *    - spacji wewnątrz wyrażenia
+ *    - pustych nawiasów
  */
 std::istream& operator>>(std::istream& stream, Complex& complex)
 {
@@ -200,7 +205,55 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
     // =========================================
     for(int i=1; i<data_len-1; i++)
     {
-        // Najpierw sprawdźmy nawiasy
+        failed = checkIfCorrectChar(data[], data_len, i, numbers[], num_i);
+
+
+        if(failed){      
+          std::cerr << "Error: Wrong format!" << std::endl;
+          i=data_len;
+          data = "";
+        }
+    }// for
+    
+    // Jeśli etap filtrowania przeszedł pomyślnie
+    // ========================================================
+    // tablica numbers - przechowuje w tym momencie liczby podane przez użytkownika
+    //                   nieposegregowane: rzeczywiste i urojone(z literką "i").
+    // num_i - liczba... liczb
+    if(!failed){
+      for(int i=0; i <= num_i; i++){
+
+        int numbers_len = numbers[i].length();
+
+        if(numbers[i][0] == 'i' || (numbers[i][0] == '+' && numbers[i][1] == 'i'))
+        {
+          complex.im += 1;
+        }
+        else if (numbers[i][0] == '-' && numbers[i][1] == 'i') 
+        {
+          complex.im -= 1;
+        }
+        else if(numbers[i][numbers_len-1] == 'i')
+        {
+          complex.im += std::stof(numbers[i]);
+        }
+        else
+        {
+          complex.re += std::stof(numbers[i]);
+        }
+
+      }// for
+    }// if
+
+  }while(failed && attempts);
+  
+  return stream;
+}
+
+bool checkIfCorrectChar(std::string data[], int &data_len, int &i, std::string numbers[], int &num_i)
+{
+  bool failed = 0;
+          // Najpierw sprawdźmy nawiasy
         if(data[0] != '(' || data[data_len-1] != ')')
         {
           failed = 1;
@@ -250,45 +303,5 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
               failed = 1;
           }// switch
         }// else
-
-        if(failed){      
-          std::cerr << "Error: Wrong format!" << std::endl;
-          i=data_len;
-          data = "";
-        }
-    }// for
-    
-    // Jeśli etap filtrowania przeszedł pomyślnie
-    // ========================================================
-    // tablica numbers - przechowuje w tym momencie liczby podane przez użytkownika
-    //                   nieposegregowane: rzeczywiste i urojone(z literką "i").
-    // num_i - liczba... liczb
-    if(!failed){
-      for(int i=0; i <= num_i; i++){
-
-        int numbers_len = numbers[i].length();
-
-        if(numbers[i][0] == 'i' || (numbers[i][0] == '+' && numbers[i][1] == 'i'))
-        {
-          complex.im += 1;
-        }
-        else if (numbers[i][0] == '-' && numbers[i][1] == 'i') 
-        {
-          complex.im -= 1;
-        }
-        else if(numbers[i][numbers_len-1] == 'i')
-        {
-          complex.im += std::stof(numbers[i]);
-        }
-        else
-        {
-          complex.re += std::stof(numbers[i]);
-        }
-
-      }// for
-    }// if
-
-  }while(failed && attempts);
-  
-  return stream;
+    return failed;
 }

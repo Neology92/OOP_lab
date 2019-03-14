@@ -22,6 +22,8 @@ struct  Complex {
 Complex conjugate(Complex complex);
 Complex modulus(Complex complex);
 
+// Sprawdź kolejny znak pod kątem zapisu liczby zespolonej
+bool checkIfCorrectChar();
 
 
 Complex  operator + (Complex  arg1,  Complex  arg2);
