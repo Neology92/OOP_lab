@@ -15,6 +15,13 @@ Obikety/struktury np w numbers, data (complex.cpp) etc.
 
 sama kropka wyspuje
 
+funckje o długości do 25 linii
 
-latwy/trudny
+wydzielenie systemu liczenia pinktów do nowego pliku:
+Statistics.cpp
+>> header:
+Statistics.hh
+
+
+
 
