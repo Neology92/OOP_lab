@@ -112,7 +112,7 @@ Complex  operator / (Complex  arg1,  Complex  arg2)
     }
 
     Complex numerator = arg1 * conjugate(arg2);
-    Complex denominator = modulus(arg2) * modulus(arg2);
+    Complex denominator = modulus(arg2);
 
 
     result.re = numerator.re / denominator.re;
