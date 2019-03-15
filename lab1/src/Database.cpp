@@ -24,7 +24,7 @@ static Expression  easy_test[] =
  */
 static Expression  hard_test[] =
   { 
-    {{ 4.3,-1.1}, kMultiplication, { 7.2, 2.4}},
+    {{ 4.3,-1.1}, kMultiplication, { 2, 1.5}},
     {{ 2, 2},     kDivision,       { 2,-1}},
     {{ 1.1, 5.5}, kMultiplication, { 2.3, 4.1}},
     {{-1.5, 6.0}, kDivision,       {-0.5,-1.5}},

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <assert.h>
 
 #include "Expression.hh"
 #include "Complex.hh"
@@ -108,12 +109,17 @@ Complex  operator / (Complex  arg1,  Complex  arg2)
     if(!(arg2.re + arg2.im))
     {
       std::cerr << "Error: Division by zero occured!" << std::endl;
-      return {0,0};
+      assert(arg2.re+arg2.im);
     }
 
     Complex numerator = arg1 * conjugate(arg2);
     Complex denominator = modulus(arg2);
 
+    if(denominator.re == 0)
+    {
+      std::cerr << "Error: Denominator is equal 0! Cannot divide!" << std::endl;
+      assert(denominator.re);
+    }
 
     result.re = numerator.re / denominator.re;
     result.im = numerator.im / denominator.re;

@@ -34,12 +34,12 @@ int main(int argc, char **argv)
   while (GetNextQuestion(&base,&expression)) {
     Complex pattern{0,0};
     Complex answer{0,0};
+    pattern = Solve(expression);
     
     std::cout << "Podaj wynik operacji: ";
     std::cout << expression << " = ";
 
     std::cin >> answer;
-    pattern = Solve(expression);
     points.check(pattern, answer);
   }
   
