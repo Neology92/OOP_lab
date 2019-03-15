@@ -18,6 +18,12 @@ struct Database {
 
 
 /*
+* Ustawia test
+*/
+void SetTest(Database *database_ptr, Expression *test_array_ptr, unsigned int number_of_questions);
+
+
+/*
  * Inicjalizuje test powiazany z dana nazwa.
  */
 bool Init( Database  *database_ptr, const char*  test_name );
