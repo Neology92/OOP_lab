@@ -32,13 +32,30 @@ int main(int argc, char **argv)
   Expression   expression;
   
   while (GetNextQuestion(&base,&expression)) {
+    
+    int attempts = 3;
+    int failed = 0;
+    
     Complex pattern{0,0};
     Complex answer{0,0};
     
     std::cout << "Podaj wynik operacji: ";
     std::cout << expression << " = ";
 
-    std::cin >> answer;
+    do{
+      failed = 0;
+      std::cin >> answer;
+      attempts--;
+
+      if(std::cin.fail())
+      {
+        failed = 1;
+        std::cerr << "Error: Wrong format! Write again." << std::endl;
+      }
+      std::cin.clear();
+
+    }while(failed && attempts);
+
     pattern = Solve(expression);
     points.check(pattern, answer);
   }

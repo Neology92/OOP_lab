@@ -5,8 +5,6 @@
 #include "Complex.hh"
 
 
-
-
 /*!
  * Tworzy sprzężenie liczby zespolonej
  * Argumenty:
@@ -183,14 +181,8 @@ std::ostream& operator<<(std::ostream& stream, Complex& complex)
  */
 std::istream& operator>>(std::istream& stream, Complex& complex)
 {
-  // Flagi i liczba prób
-  bool failed = 0;
-  int attempts = 3;
-
-  do
-  {
-    failed = 0;   
-    attempts--; // Odejmij jedną próbę
+    // Flagi i liczba prób
+    bool failed = 0;
 
     std::string data; // Pojemnik na dane
     stream >> data;
@@ -199,7 +191,11 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
     std::string numbers[10]; // Pojemnik na wyciągnięte liczby
     int num_i=0;         // Iterator dla numbers
 
-
+    if(data_len < 3)
+    {
+      stream.setstate(std::ios::failbit);
+      return stream;
+    }
 
     // Filtrowanie danych i wyciągnięcie liczb
     // =========================================
@@ -208,9 +204,8 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
         failed = checkIfCorrectChar(data, data_len, i, numbers, num_i);
 
         if(failed){      
-          std::cerr << "Error: Wrong format!" << std::endl;
-          i=data_len;
-          data = "";
+          stream.setstate(std::ios::failbit);
+          return stream;
         }
     }// for
     
@@ -219,7 +214,6 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
     // tablica numbers - przechowuje w tym momencie liczby podane przez użytkownika
     //                   nieposegregowane: rzeczywiste i urojone(z literką "i").
     // num_i - liczba... liczb
-    if(!failed){
       for(int i=0; i <= num_i; i++){
 
         int numbers_len = numbers[i].length();
@@ -240,11 +234,7 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
         {
           complex.re += std::stof(numbers[i]);
         }
-
       }// for
-    }// if
-
-  }while(failed && attempts);
   
   return stream;
 }
