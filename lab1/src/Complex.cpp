@@ -205,8 +205,7 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
     // =========================================
     for(int i=1; i<data_len-1; i++)
     {
-        failed = checkIfCorrectChar(data[], data_len, i, numbers[], num_i);
-
+        failed = checkIfCorrectChar(data, data_len, i, numbers, num_i);
 
         if(failed){      
           std::cerr << "Error: Wrong format!" << std::endl;
@@ -250,7 +249,7 @@ std::istream& operator>>(std::istream& stream, Complex& complex)
   return stream;
 }
 
-bool checkIfCorrectChar(std::string data[], int &data_len, int &i, std::string numbers[], int &num_i)
+bool checkIfCorrectChar(std::string data, int &data_len, int &i, std::string numbers[], int &num_i)
 {
   bool failed = 0;
           // Najpierw sprawdźmy nawiasy
