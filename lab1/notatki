@@ -2,26 +2,3 @@
 // TODO:
 /////////////////////////////
 
-
-    Komunikacja z użytkownikiem nie moze występować w przeciążeniu strumienia >> !!!!!!
-
- struktury danych dla 
-statystyki odpowiedzi oraz utworzyc osobny moduł, w którym znajdowa ´ c si˛e b˛edzie definicja ´
-funkcji umozliwiaj ˛acej wy ˙ swietlenie statystyki
-
-
-Obikety/struktury np w numbers, data (complex.cpp) etc.
-
-
-sama kropka wyspuje
-
-funckje o długości do 25 linii
-
-wydzielenie systemu liczenia pinktów do nowego pliku:
-Statistics.cpp
->> header:
-Statistics.hh
-
-
-
-
