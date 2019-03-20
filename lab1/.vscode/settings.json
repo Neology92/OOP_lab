@@ -25,6 +25,13 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "string": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "array": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "fstream": "cpp",
+        "optional": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }
