@@ -60,6 +60,8 @@ int main(int argc, char **argv)
     }while(failed && attempts);
 
     points.check(pattern, answer);
+    
+    std::cout << std::endl;
   }
   
   std::cout << std::endl;

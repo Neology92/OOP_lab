@@ -15,8 +15,8 @@
 
 - wczytywanie z pliku tekstowego STL:
 
-    Vector<Expression>
+ Błędy przy wczytywaniu!!!
 
-SetTest - otworzy plik i wczyta pytania do Vectora
-GetNextQuestion - podejmie z Vectora kolejne pytanie, lub zwróci 0, jeśli nie ma kolejnego
-Init - Wywołuje SetTest na poziomie latwym, lub trudnym
+Wyrażenie (C-1i) musi uznać za błędne
+Nie pobiera wszystkich danych
+Ostatni dane podaje jako 0*0

@@ -55,7 +55,7 @@ bool Solve(Expression  expr, Complex &solution)
           break;
 
         default:
-            std::cerr << "Error: Unknown operator in expression!" << std::endl;
+            std::cerr << "Error: Unknown operator in expression!" << std::endl << std::endl;
             return false;
           break;
     }
