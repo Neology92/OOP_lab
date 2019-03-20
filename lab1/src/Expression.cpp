@@ -1,16 +1,38 @@
 #include <iostream>
+#include <sstream>
 
 #include "Expression.hh"
 
-
+  
+/*!
+ * Dzieli linię tekstu według podanego symbolu.
+ * Argumenty:
+ *    text - text do podzielenia,
+ *    sliced[] - tablica, do której zostaną wpisane oddzielone frazy
+ *    ch - symbol, według którego nastąpi podział
+ * Założenia:
+ *    Przekazana tablica musi musi być na tyle duża, aby pomieściła podzieloną frazę
+ */
+void slice(std::string &text, std::string sliced[], char ch)
+{
+    int i = 0;
+    std::stringstream sstream;
+    sstream << text;
+    while(getline(sstream, sliced[i], ch))
+    {
+      i++;
+    }
+}
+  
 /*!
  * Oblicza wyrażenie złożone z dwóch liczb zespolonych i symbolu operacji.
  * Argumenty:
  *    expr - wyrażenie liczb zespolonych,
+ *    solution - docelowy pojemnik do przekazania wyniku
  * Zwraca:
- *    Wynik - jako liczbę zespoloną.
+ *    Bool - czy udało się rozwiązać.
  */
-Complex Solve(Expression  expr)
+bool Solve(Expression  expr, Complex &solution)
 {
     Complex result{0,0};
 
@@ -34,10 +56,12 @@ Complex Solve(Expression  expr)
 
         default:
             std::cerr << "Error: Unknown operator in expression!" << std::endl;
+            return false;
           break;
     }
 
-    return result;
+    solution = result;
+    return true;
 }
 
 

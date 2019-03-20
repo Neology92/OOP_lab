@@ -2,10 +2,17 @@
 
 #include "Complex.hh"
 
+
+/*!
+ * Dzieli text na fragmenty, według podanego znaku
+ */
+void slice(std::string &text, std::string sliced[], char ch);
+
+
 /*!
  * Modeluje zbior operatorow arytmetycznych.
  */
-enum Operator { kAddition, kSubtraction, kMultiplication, kDivision };
+enum Operator { kIncorrect=-1, kAddition, kSubtraction, kMultiplication, kDivision };
 
 
 /*!
@@ -18,7 +25,10 @@ struct Expression {
 };
 
 
-Complex Solve(Expression  expr);
+/*!
+ * Oblicza wyrażene z liczb zespolonych
+ */
+bool Solve(Expression  expr, Complex &solution);
 
 
 // Przeciążenie operatora strumienia wyjścia
