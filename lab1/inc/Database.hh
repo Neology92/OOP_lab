@@ -1,6 +1,7 @@
 #pragma once
 
-
+#include <vector>
+#include <fstream>
 #include "Expression.hh"
 
 
@@ -11,22 +12,22 @@
  * z bazy.
  */
 struct Database {
-  Expression   *test_array_ptr;     /* Wskaznik na tablice zawierajaca pytania testu */
-  unsigned int number_of_questions; /* Ilosc wszystkich pytan */
   unsigned int question_index;      /* Numer pytania, ktore ma byc pobrane jako nastepne */
+  Expression *last_question;        /* Wskaźnik na ostatni element */
+  std::vector<Expression> questions;
 };
 
 
 /*
-* Ustawia test
+* Wczytuje pytania z pliku.
 */
-void SetTest(Database *database_ptr, Expression *test_array_ptr, unsigned int number_of_questions);
+bool SetTest(Database &database_ptr, std::string &file_path);
 
 
 /*
  * Inicjalizuje test powiazany z dana nazwa.
  */
-bool Init( Database  *database_ptr, const char*  test_name );
+bool Init( Database &database_ptr, const char *test_name );
 
 /*
  * Udostepnia nastepne pytanie z bazy.

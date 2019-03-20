@@ -16,9 +16,9 @@ int main(int argc, char **argv)
   }
 
 
-  Database   base = { nullptr, 0, 0 };
+  Database   base = { 0, nullptr };
 
-  if (Init(&base,argv[1]) == false) {
+  if (Init(base,argv[1]) == false) {
     std::cerr << " Inicjalizacja testu nie powiodla sie." << std::endl;
     return 1;
   }
@@ -38,8 +38,10 @@ int main(int argc, char **argv)
     
     Complex pattern{0,0};
     Complex answer{0,0};
-    pattern = Solve(expression);
-    
+
+    if(!Solve(expression, pattern))
+      continue;
+
     std::cout << "Podaj wynik operacji: ";
     std::cout << expression << " = ";
 
@@ -57,7 +59,6 @@ int main(int argc, char **argv)
 
     }while(failed && attempts);
 
-    pattern = Solve(expression);
     points.check(pattern, answer);
   }
   

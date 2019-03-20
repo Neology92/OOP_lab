@@ -1,34 +1,35 @@
 #include <iostream>
 #include <cstring>
 #include <cassert>
+#include <sstream>
 
 #include "Database.hh"
 
 using namespace std;
 
-/*
- * Tablica, ktora jest widoczna tylko w tym module.
- * Zawiera ona tresc latwego testu.
- */
-static Expression  easy_test[] =
-  { 
-    {{2,1}, kAddition, {1,2}},
-    {{1,0}, kSubtraction, {0,1}},
-    {{3,0}, kMultiplication, {0,3}},
-    {{4,8}, kDivision, {1,0}},
-  };
+// /*
+//  * Tablica, ktora jest widoczna tylko w tym module.
+//  * Zawiera ona tresc latwego testu.
+//  */
+// static Expression  easy_test[] =
+//   { 
+//     {{2,1}, kAddition, {1,2}},
+//     {{1,0}, kSubtraction, {0,1}},
+//     {{3,0}, kMultiplication, {0,3}},
+//     {{4,8}, kDivision, {1,0}},
+//   };
 
-/*
- * Analogicznie zdefiniuj test "trudne"
- *
- */
-static Expression  hard_test[] =
-  { 
-    {{ 4.3,-1.1}, kMultiplication, { 2, 1.5}},
-    {{ 2, 2},     kDivision,       { 2,-1}},
-    {{ 1.1, 5.5}, kMultiplication, { 2.3, 4.1}},
-    {{-1.5, 6.0}, kDivision,       {-0.5,-1.5}},
-  };
+// /*
+//  * Analogicznie zdefiniuj test "trudne"
+//  *
+//  */
+// static Expression  hard_test[] =
+//   { 
+//     {{ 4.3,-1.1}, kMultiplication, { 2, 1.5}},
+//     {{ 2, 2},     kDivision,       { 2,-1}},
+//     {{ 1.1, 5.5}, kMultiplication, { 2.3, 4.1}},
+//     {{-1.5, 6.0}, kDivision,       {-0.5,-1.5}},
+//   };
 
 
 /*
@@ -48,11 +49,83 @@ static Expression  hard_test[] =
  *      - Parametr number_of_questions zawiera wartosc, ktora nie przekracza ilosci elementow
  *        w tablicy dostepnej poprzez test_array_ptr.
  */
-void SetTest(Database *database_ptr, Expression *test_array_ptr, unsigned int number_of_questions)
+bool SetTest(Database &database, std::string file_path)
 {
-  database_ptr->test_array_ptr = test_array_ptr;
-  database_ptr->number_of_questions = number_of_questions;
-  database_ptr->question_index = 0;
+  std::ifstream file;
+  file.open(file_path, ios::in);
+
+  if(!file.good()){
+    return false;
+  }
+
+  // Plik został poprawnie otworzony
+  // ===============================
+
+
+  while(!file.eof())
+  {
+    std::string line;
+    std::string expr[3];
+    std::stringstream sstream;
+
+    getline(file, line);
+
+    slice(line, expr, ' ');
+
+    std::cout << expr[0]
+              << expr[1]
+              << expr[2]
+              << std::endl;
+
+    Complex comp1;
+    Operator op;
+    Complex comp2;
+
+    sstream.clear();
+    sstream << expr[0];
+    sstream >> comp1;
+
+    const char *ch = expr[1].c_str(); // Konwersja na char
+                                      // switch nie honoruje typu string
+    switch(ch[0])
+    {
+      case '+':
+          op = kAddition;
+        break;
+
+      case '-':
+          op = kSubtraction;
+        break;
+
+      case '*':
+          op = kMultiplication;
+        break;
+
+      case '/':
+          op = kDivision;
+        break;
+
+      default:
+        op = kIncorrect;
+    }
+
+    sstream.clear();
+    sstream << expr[2];
+    sstream >> comp2;
+
+
+    std::cout << comp1 << " " << op << " " << comp2 << std::endl;
+
+    // database.questions.push_back({comp1, op, comp2});
+  
+  }
+
+
+  if(!database.questions.empty())
+    database.last_question = &database.questions.back();
+
+  file.close();
+  return true;
 }
 
 
@@ -77,19 +150,19 @@ void SetTest(Database *database_ptr, Expression *test_array_ptr, unsigned int nu
  *              zainicjalizowany,
  *       false - w przypadku przeciwnym.
  */
-bool Init( Database  *database_ptr, const char*  test_name )
+bool Init( Database &database, const char *test_name)
 {
   if (!strcmp(test_name,"latwy")) {
-    SetTest(database_ptr,easy_test,sizeof(easy_test)/sizeof(Expression));
-    return true;
+    if(SetTest(database, "./dat/easyTest.dat"))
+      return true;
   }
   else if (!strcmp(test_name,"trudny")) {
-    SetTest(database_ptr,hard_test,sizeof(hard_test)/sizeof(Expression));
-    return true;
+    if(SetTest(database, "./dat/hardTest.dat"))
+      return true;
   }
 
-  cerr << "Otwarcie testu '" << test_name << "' nie powiodlo sie." << endl;
-  return false;
+    std::cerr << "Error: couldn't open test: " << test_name << std::endl;
+    return false;
 }
 
 
@@ -113,11 +186,11 @@ bool Init( Database  *database_ptr, const char*  test_name )
  *              przypisane nowe wyrazenie zespolone z bazy,
  *       false - w przypadku przeciwnym.
  */
-bool GetNextQuestion( Database  *database_ptr,  Expression *expression_ptr )
+bool GetNextQuestion( Database  *database,  Expression *expression_ptr )
 {
-  if (database_ptr->question_index >= database_ptr->number_of_questions) return false;
+  if (&(database->questions[database->question_index]) == database->last_question) return false;
 
-  *expression_ptr = database_ptr->test_array_ptr[database_ptr->question_index];
-  ++database_ptr->question_index;
+  *expression_ptr = database->questions[database->question_index];
+  ++database->question_index;
   return true;
 }
