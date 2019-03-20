@@ -72,14 +72,9 @@ bool SetTest(Database &database, std::string file_path)
 
     slice(line, expr, ' ');
 
-    std::cout << expr[0]
-              << expr[1]
-              << expr[2]
-              << std::endl;
-
-    Complex comp1;
+    Complex comp1{0,0};
     Operator op;
-    Complex comp2;
+    Complex comp2{0,0};
 
     sstream.clear();
     sstream << expr[0];
@@ -116,7 +111,7 @@ bool SetTest(Database &database, std::string file_path)
 
     std::cout << comp1 << " " << op << " " << comp2 << std::endl;
 
-    // database.questions.push_back({comp1, op, comp2});
+    database.questions.push_back({comp1, op, comp2});
   
   }
 
