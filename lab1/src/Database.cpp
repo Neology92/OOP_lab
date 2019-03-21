@@ -61,9 +61,11 @@ bool SetTest(Database &database, std::string file_path)
   // Plik został poprawnie otworzony
   // ===============================
 
+  int line_num = 0;
 
   while(!file.eof())
   {
+    line_num++;
     std::string line;
     std::string expr[3];
     std::stringstream sstream;
@@ -84,6 +86,11 @@ bool SetTest(Database &database, std::string file_path)
     sstream.clear();
     sstream << expr[0];
     sstream >> comp1;
+    if(sstream.fail())
+    {
+      std::cerr << "Error: Encountered an incorrect expression. It's been omitted. Line: " << line_num << std::endl;
+      continue;
+    }
 
     const char *ch = expr[1].c_str(); // Konwersja na char
                                       // switch nie honoruje typu string
@@ -112,6 +119,11 @@ bool SetTest(Database &database, std::string file_path)
     sstream.clear();
     sstream << expr[2];
     sstream >> comp2;
+    if(sstream.fail() || op == kIncorrect)
+    {
+      std::cerr << "Error: Encountered an incorrect expression. It's been omitted. Line: " << line_num << std::endl;
+      continue;
+    }
 
     // [DEBUG] wypisz wyrażenie 
     // std::cout << comp1 << " " << op << " " << comp2 << std::endl << std::endl;

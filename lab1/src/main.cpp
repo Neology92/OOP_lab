@@ -6,6 +6,7 @@
 
 int main(int argc, char **argv)
 {
+  system("clear");
 
   if (argc < 2) {
     std::cout << std::endl;
@@ -25,12 +26,16 @@ int main(int argc, char **argv)
 
   Points points;  // Deklaracja obiektu podliczającego punkty użytkownika
   
-  std::cout << std::endl;
-  std::cout << " Start testu arytmetyki zespolonej: " << argv[1] << std::endl;
+  // [DEBUG] end of program
+  // return 1;
+    
+  std::cout << "\nStart testu arytmetyki zespolonej: " << argv[1] << std::endl;
   std::cout << std::endl;
 
+  getchar();
+
   Expression   expression;
-  
+
   while (GetNextQuestion(&base,&expression)) {
     
     int attempts = 3;
@@ -39,8 +44,12 @@ int main(int argc, char **argv)
     Complex pattern{0,0};
     Complex answer{0,0};
 
-    if(!Solve(expression, pattern))
+    system("clear");
+
+    if(!Solve(expression, pattern)){
+      getchar();
       continue;
+      }
 
     std::cout << "Podaj wynik operacji: ";
     std::cout << expression << " = ";
@@ -59,15 +68,16 @@ int main(int argc, char **argv)
 
     }while(failed && attempts);
 
-    points.check(pattern, answer);
-    
-    std::cout << std::endl;
+    points.check(pattern, answer);    
+    getchar();
+    getchar();
   }
   
+  system("clear");
+
   std::cout << std::endl;
   std::cout << " Koniec testu" << std::endl;
   std::cout << std::endl;
 
   points.showResults();
-
 }
