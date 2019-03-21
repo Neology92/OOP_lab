@@ -72,6 +72,11 @@ bool SetTest(Database &database, std::string file_path)
 
     slice(line, expr, ' ');
 
+    // [DEBUG] Wypisz zawartość tablicy po slice()
+    // std::cout << expr[0] << ", "
+    //           << expr[1] << ", "
+    //           << expr[2] << std::endl;
+
     Complex comp1{0,0};
     Operator op;
     Complex comp2{0,0};
@@ -108,8 +113,8 @@ bool SetTest(Database &database, std::string file_path)
     sstream << expr[2];
     sstream >> comp2;
 
-
-    std::cout << comp1 << " " << op << " " << comp2 << std::endl;
+    // [DEBUG] wypisz wyrażenie 
+    // std::cout << comp1 << " " << op << " " << comp2 << std::endl << std::endl;
 
     database.questions.push_back({comp1, op, comp2});
   
@@ -183,7 +188,7 @@ bool Init( Database &database, const char *test_name)
  */
 bool GetNextQuestion( Database  *database,  Expression *expression_ptr )
 {
-  if (&(database->questions[database->question_index]) == database->last_question) return false;
+  if (&(database->questions[database->question_index]) > database->last_question) return false;
 
   *expression_ptr = database->questions[database->question_index];
   ++database->question_index;
